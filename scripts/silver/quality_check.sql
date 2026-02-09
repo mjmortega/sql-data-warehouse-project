@@ -27,3 +27,11 @@ WHERE prd_cost < 0  OR prd_cost IS NULL
 SELECT *
 FROM silver.crm_prd_info
 WHERE prd_end_dt < prd_start_dt
+
+-- Check for Integer Dates that might be negative or 0
+SELECT * FROM bronze.crm_sales_details
+WHERE sls_order_dt <= 0
+
+-- Check for Invalid Date Orders
+SELECT * FROM bronze.crm_sales_details
+WHERE sls_order_dt > sls_ship_dt OR sls_order_dt > sls_due_dt
