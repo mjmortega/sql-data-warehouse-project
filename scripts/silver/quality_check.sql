@@ -14,8 +14,12 @@ FROM silver.crm_prd_info
 WHERE prd_nm != TRIM(prd_nm)
 
 -- Data Standardization & Consistency
-SELECT DISTINCT prd_line
-FROM silver.crm_prd_info
+SELECT DISTINCT gen,
+CASE WHEN UPPER(TRIM(gen)) IN ('F', 'FEMALE') THEN 'Female'
+	WHEN UPPER(TRIM(gen)) IN ('M', 'MALE') THEN 'Male'
+		ELSE 'n/a'
+	END AS gen
+FROM bronze.erp_cust_az12
 
 -- Check for NULLs or Negative Numbers
 -- Expectation: No Results
@@ -49,3 +53,10 @@ WHERE sls_sales != sls_quantity * sls_price
 OR sls_sales IS NULL OR sls_quantity IS NULL OR sls_price IS NULL
 OR sls_sales <= 0 OR sls_quantity <= 0 OR sls_price <= 0
 ORDER BY sls_sales, sls_quantity, sls_price
+
+-- Identify Out-of-Range Dates
+
+SELECT DISTINCT
+bdate
+FROM bronze.erp_cust_az12
+WHERE bdate < '1926-01-01' OR bdate > GETDATE()
