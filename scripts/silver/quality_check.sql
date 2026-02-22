@@ -14,8 +14,8 @@ FROM silver.crm_prd_info
 WHERE prd_nm != TRIM(prd_nm)
 
 -- Data Standardization & Consistency
-SELECT DISTINCT gen
-FROM silver.erp_cust_az12
+SELECT DISTINCT cntry
+FROM silver.erp_loc_a101 ORDER BY cntry
 
 -- Check for NULLs or Negative Numbers
 -- Expectation: No Results
