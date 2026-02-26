@@ -9,13 +9,13 @@ HAVING COUNT(*) >1 OR prd_id IS NULL
 
 -- Check for unwanted Spaces
 -- Expectation: No Result
-SELECT prd_nm
-FROM silver.crm_prd_info
-WHERE prd_nm != TRIM(prd_nm)
+SELECT maintenance
+FROM bronze.erp_px_cat_g1v2
+WHERE maintenance != TRIM(maintenance)
 
 -- Data Standardization & Consistency
-SELECT DISTINCT cntry
-FROM silver.erp_loc_a101 ORDER BY cntry
+SELECT DISTINCT maintenance
+FROM bronze.erp_px_cat_g1v2 ORDER BY maintenance
 
 -- Check for NULLs or Negative Numbers
 -- Expectation: No Results
